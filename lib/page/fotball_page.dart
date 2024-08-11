@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:football_app/data/api_manager.dart';
+import 'package:football_app/page/pages_body.dart';
 
 class FotballPage extends StatefulWidget {
   const FotballPage({super.key});
@@ -25,6 +27,12 @@ class _FotballPageState extends State<FotballPage> {
           
         ),
         centerTitle: true,
+      ),
+      body: FutureBuilder(
+        future: FottballApi().getAllMatches(),
+        builder: (context, snapshot) {
+          return PageBody(snapshot.data);
+        },
       ),
     );
   }
