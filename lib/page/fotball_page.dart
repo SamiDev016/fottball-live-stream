@@ -31,7 +31,15 @@ class _FotballPageState extends State<FotballPage> {
       body: FutureBuilder(
         future: FottballApi().getAllMatches(),
         builder: (context, snapshot) {
-          return PageBody(snapshot.data);
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData) {
+            return PageBody(snapshot.data!);
+          } else {
+            return const Center(child: Text('No data available'));
+          }
         },
       ),
     );
